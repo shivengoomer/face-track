@@ -73,57 +73,84 @@ export default function Video() {
     videoRef.current?.addEventListener("loadeddata", onVideoPlay);
     return () => videoRef.current?.removeEventListener("loadeddata", onVideoPlay);
   }, [modelsLoaded]);
+return (
+  <div className="text-center px-4 py-10 bg-gradient-to-b from-gray-900 via-black to-gray-900 min-h-screen text-white">
+  <h1 className="text-5xl sm:text-6xl md:text-7xl pt-5 mb-10 font-extrabold text-transparent bg-clip-text 
+                 bg-gradient-to-r from-black via-white to-gray-600
+                 drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]
+                 animate-fade-in">
+    Track with Webcam
+  </h1>
 
-  return (
-    <div className="text-center ">
-      <h1 className="text-5xl font-bold mb-15">Face Tracking Recorder</h1>
-   <div className="flex w-full gap-2 max-w-screen">
-  <div className={`flex flex-col items-center justify-center gap-6 p-6 transition-all duration-300 ${recordedVideo ? "w-3/4" : "w-full"}`}>
+  {/* Container */}
+  <div className="flex flex-col lg:flex-row w-full gap-6 lg:gap-10 max-w-screen-lg mx-auto items-center justify-between">
+    
+    <div
+      className={`flex flex-col items-center justify-center gap-4 sm:gap-6 p-4 sm:p-6 
+                  backdrop-blur-md bg-white/5 rounded-xl shadow-lg
+                  transition-all duration-300 ${recordedVideo ? "lg:w-3/4 w-full" : "w-full"}`}
+    >
+      <div className="relative w-full max-w-[90vw] sm:max-w-[650px] h-[240px] sm:h-[400px] lg:h-[480px] 
+                      bg-gradient-to-tr from-gray-800 to-gray-700 rounded-xl overflow-hidden 
+                      flex items-center justify-center shadow-[0_0_25px_rgba(0,0,0,0.6)]">
+        <video ref={videoRef} autoPlay muted playsInline className="hidden" />
+        <canvas ref={canvasRef} className="w-full h-full rounded-xl" />
+      </div>
 
-    <div className="relative w-full max-w-[650px] h-[480px] bg-black rounded-lg">
-      <video ref={videoRef} autoPlay muted playsInline className="hidden" />
-      <canvas ref={canvasRef} className="w-full h-full rounded-4xl" />
-    </div>
-
-    {/* Recording Controls */}
-    <div className="flex gap-4">
-      {!isRecording ? (
-        <button
-          onClick={startRecording}
-          className="px-4  text-2xl py-2 bg-green-600 text-white  hover:bg-green-700 rounded-3xl"
-        >
-          Start Recording
-        </button>
-      ) : (
-        <button
-          onClick={stopRecording}
-          className="px-4  text-2xl py-2 bg-red-600 text-white rounded-3xl hover:bg-red-700"
-        >
-          Stop Recording
-        </button>
-      )}
-    </div>
-  </div>
-
-  {/* Right Section - Recorded Video */}
-  {recordedVideo && (
-    <div className="flex-grow p-4 transition-all duration-300">
-      <div className="w-full flex flex-col items-center justify-center gap-5">
-        <h2 className="text-3xl font-semibold mb-2">Recorded Video</h2>
-        <video src={recordedVideo} controls className="w-full rounded-lg mb-2" />
-        <button
-          onClick={downloadVideo}
-          className="px-4  text-2xl py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Download Video
-        </button>
+      <div className="flex gap-4 sm:gap-6">
+        {!isRecording ? (
+          <button
+            onClick={startRecording}
+            className="px-5 sm:px-6 text-lg sm:text-2xl py-2 sm:py-3 rounded-3xl font-semibold
+                       bg-gradient-to-r from-green-500 to-green-600 text-white 
+                       shadow-[0_0_10px_rgba(16,185,129,0.5)]
+                       hover:from-green-400 hover:to-green-500 hover:shadow-[0_0_20px_rgba(16,185,129,0.7)]
+                       transition-all duration-300"
+          >
+            Start Recording
+          </button>
+        ) : (
+          <button
+            onClick={stopRecording}
+            className="px-5 sm:px-6 text-lg sm:text-2xl py-2 sm:py-3 rounded-3xl font-semibold
+                       bg-gradient-to-r from-red-500 to-red-600 text-white 
+                       shadow-[0_0_10px_rgba(239,68,68,0.5)]
+                       hover:from-red-400 hover:to-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.7)]
+                       transition-all duration-300"
+          >
+            Stop Recording
+          </button>
+        )}
       </div>
     </div>
-  )}
+
+    {recordedVideo && (
+      <div className="flex-grow p-4 sm:p-6 backdrop-blur-md bg-white/5 rounded-xl shadow-lg 
+                      lg:w-1/3 w-full transition-all duration-300">
+        <div className="w-full flex flex-col items-center justify-center gap-4 sm:gap-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400 mb-2">
+            Recorded Video
+          </h2>
+          <video
+            src={recordedVideo}
+            controls
+            className="w-full rounded-xl shadow-md border border-white/10"
+          />
+          <button
+            onClick={downloadVideo}
+            className="px-5 sm:px-6 text-lg sm:text-2xl py-2 sm:py-3 rounded-3xl font-semibold
+                       bg-gradient-to-r from-blue-500 to-blue-600 text-white 
+                       shadow-[0_0_10px_rgba(59,130,246,0.5)]
+                       hover:from-blue-400 hover:to-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.7)]
+                       transition-all duration-300"
+          >
+            Download Video
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
 </div>
 
-    </div>
-    
-
-
-  )};
+);
+}
